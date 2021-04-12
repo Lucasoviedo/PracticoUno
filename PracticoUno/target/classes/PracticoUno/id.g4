@@ -10,8 +10,6 @@ MESPAR : DIGITO DIGITO '/' DIGITO [02468] '/' DIGITO DIGITO DIGITO DIGITO; //VA 
 HORAMENOR : ('0'[89] ':' DIGITO DIGITO)|('1'[012]':'DIGITO DIGITO) ; 
 HORAMAYOR : ('18:' [345] DIGITO)|(('19:'|'20:') DIGITO DIGITO)|('21:'[012] DIGITO)|('21:30') ; 
 
-
-WS : [ \n\t\r]+ -> skip;
 OTRO : . -> skip ;
 
 s: MESPAR {System.out.println("Linea " + $MESPAR.getLine() + " es mes par -> |" + $MESPAR.getText() + "|"); } s 
