@@ -19,7 +19,7 @@ public class idParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		ENTERO=1;
+		MESPAR=1, HORAMENOR=2, HORAMAYOR=3, WS=4, OTRO=5;
 	public static final int
 		RULE_s = 0;
 	private static String[] makeRuleNames() {
@@ -36,7 +36,7 @@ public class idParser extends Parser {
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "ENTERO"
+			null, "MESPAR", "HORAMENOR", "HORAMAYOR", "WS", "OTRO"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -91,10 +91,15 @@ public class idParser extends Parser {
 	}
 
 	public static class SContext extends ParserRuleContext {
-		public TerminalNode ENTERO() { return getToken(idParser.ENTERO, 0); }
+		public Token MESPAR;
+		public Token HORAMENOR;
+		public Token HORAMAYOR;
+		public TerminalNode MESPAR() { return getToken(idParser.MESPAR, 0); }
 		public SContext s() {
 			return getRuleContext(SContext.class,0);
 		}
+		public TerminalNode HORAMENOR() { return getToken(idParser.HORAMENOR, 0); }
+		public TerminalNode HORAMAYOR() { return getToken(idParser.HORAMAYOR, 0); }
 		public SContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -118,21 +123,41 @@ public class idParser extends Parser {
 		SContext _localctx = new SContext(_ctx, getState());
 		enterRule(_localctx, 0, RULE_s);
 		try {
-			setState(6);
+			setState(12);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,0,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(2);
-				match(ENTERO);
-				System.out.println("Encontre entero"); 
+				((SContext)_localctx).MESPAR = match(MESPAR);
+				System.out.println("Linea " + ((SContext)_localctx).MESPAR.getLine() + " es mes par -> |" + ((SContext)_localctx).MESPAR.getText() + "|"); 
 				setState(4);
 				s();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
+				{
+				setState(5);
+				((SContext)_localctx).HORAMENOR = match(HORAMENOR);
+				System.out.println( "Linea " + ((SContext)_localctx).HORAMENOR.getLine() + " es hora menor -> |" + ((SContext)_localctx).HORAMENOR.getText() +"|" ); 
+				setState(7);
+				s();
+				}
+				break;
+			case 3:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(8);
+				((SContext)_localctx).HORAMAYOR = match(HORAMAYOR);
+				System.out.println( "Linea " + ((SContext)_localctx).HORAMAYOR.getLine() + " es hora Mayor -> |" + ((SContext)_localctx).HORAMAYOR.getText() +"|" ); 
+				setState(10);
+				s();
+				}
+				break;
+			case 4:
+				enterOuterAlt(_localctx, 4);
 				{
 				}
 				break;
@@ -150,10 +175,11 @@ public class idParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\3\13\4\2\t\2\3\2"+
-		"\3\2\3\2\3\2\5\2\t\n\2\3\2\2\2\3\2\2\2\2\n\2\b\3\2\2\2\4\5\7\3\2\2\5\6"+
-		"\b\2\1\2\6\t\5\2\2\2\7\t\3\2\2\2\b\4\3\2\2\2\b\7\3\2\2\2\t\3\3\2\2\2\3"+
-		"\b";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\7\21\4\2\t\2\3\2"+
+		"\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\5\2\17\n\2\3\2\2\2\3\2\2\2\2\22\2"+
+		"\16\3\2\2\2\4\5\7\3\2\2\5\6\b\2\1\2\6\17\5\2\2\2\7\b\7\4\2\2\b\t\b\2\1"+
+		"\2\t\17\5\2\2\2\n\13\7\5\2\2\13\f\b\2\1\2\f\17\5\2\2\2\r\17\3\2\2\2\16"+
+		"\4\3\2\2\2\16\7\3\2\2\2\16\n\3\2\2\2\16\r\3\2\2\2\17\3\3\2\2\2\3\16";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
